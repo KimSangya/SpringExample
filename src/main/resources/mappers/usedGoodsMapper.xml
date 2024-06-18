@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <!-- xml의 구간은 따로 F3번으로 옮겨지지 않음으로 확인해야합니다. -->
+ <!-- 파악 되는 이유는 application.properties에서 파악을 했기 때문에 확인이 가능합니다. -->
+ <mapper namespace="com.example.lesson02.mapper.UsedGoodsMapper">
+ 	<select id="selectUsedGoods" resultType="com.example.lesson02.domain.UsedGoods">
+ 		SELECT
+ 			*
+ 		FROM
+ 			`used_goods`
+ 	</select>
+ </mapper>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}">최근 가입자 한명</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container">
+		<!-- 만약 ${}이 문제가 발생해서 안나오게 된다면 11111이 대신 나오게 된다. -->
+		<h1 th:text="${title}">11111</h1>
+		
+		<table class="table table-striped">
+			<tr>
+				<th>번호</th>
+				<!-- ${} = <%= 이런 느낌이라고 생각하면 됨. %> -->
+				<td th:text="${result.id}">1</td>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td th:text="${result.name}">ㅁㄴㅇㄹ</td>
+			</tr>
+			<tr>
+				<th>생년월일</th>
+				<td th:text="${result.yyyymmdd}"></td>
+			</tr>
+			<tr>
+				<th>이메일</th>
+				<td th:text="${result.email}"></td>
+			</tr>
+			<tr>
+				<th>자기소개</th>
+				<td th:text="${result.introduce}"></td>
+			</tr>
+			<tr>
+				<th>가입일</th>
+				<td th:text="${result.createdAt}"></td>
+			</tr>
+			<tr>
+				<th>수정일</th>
+				<td th:text="${result.updatedAt}"></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
