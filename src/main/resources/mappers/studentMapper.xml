@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
- <mapper namespace="com.example.lesson04.mapper.StudentMapper">
- 	<insert id="insertStudent" parameterType="com.example.lesson04.domain.Student">
+<mapper namespace="com.example.lesson04.mapper.StudentMapper">
+ 	<insert id="insertStudent" parameterType="com.example.lesson04.domain.Student"
+ 	useGeneratedKeys="true" keyProperty="id">
  		INSERT INTO `new_student`
  		(
  			`name`
@@ -23,4 +24,19 @@
  			,NOW()
  		)
  	</insert>
+ 	
+ 	<select id="selectLatestStudent" parameterType="int" resultType="com.example.lesson04.domain.Student">
+ 		SELECT
+ 			`id`
+			,`name`
+			,`phoneNumber`
+			,`email`
+			,`dreamJob`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`new_student`
+		WHERE 
+			`id`= #{id}
+ 	</select>
  </mapper>

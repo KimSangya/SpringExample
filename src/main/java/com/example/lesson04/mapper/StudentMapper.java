@@ -9,4 +9,6 @@ public interface StudentMapper {
 	
 	// 객체를 사용할수도 있으니, int로 리턴 타입으로 작성한다.
 	public int insertStudent(Student studnet);
+	
+	public Student selectLatestStudent(int id);
 }

@@ -10,6 +10,33 @@
 <body>
 	<div class="container">
 		<h1>방금 가입된 학생 정보</h1>
+		<table class="table table-striped">
+			<tr>
+				<th>번호</th>
+				<!-- ${} = <%= 이런 느낌이라고 생각하면 됨. %> -->
+				<td th:text="${student.id}">100</td>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td th:text="${student.name}">임시 이름</td>
+			</tr>
+			<tr>
+				<th>이메일</th>
+				<td th:text="${student.email}">임시 이메일</td>
+			</tr>
+			<tr>
+				<th>꿈의 직종</th>
+				<td th:text="${student.dreamJob}">임시 꿈의 직종</td>
+			</tr>
+			<tr>
+				<th>가입일</th>
+				<td th:text="${student.createdAt}">임시 가입일</td>
+			</tr>
+			<tr>
+				<th>수정일</th>
+				<td th:text="${student.updatedAt}">임시 수정일</td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>

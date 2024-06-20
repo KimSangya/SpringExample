@@ -16,4 +16,8 @@ public class StudentBO {
 	public void addStudent(Student studnet) {
 		studentMapper.insertStudent(studnet);
 	}
+	
+	public Student getLatestStudent(int id) {
+		return studentMapper.selectLatestStudent(id);
+	}
 }
