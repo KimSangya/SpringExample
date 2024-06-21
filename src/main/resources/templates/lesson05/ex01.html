@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>타임리프 예제 1번</title>
+</head>
+<body>
+	<h1>1. 변수</h1>
+	<div th:with="number=100">
+		<div th:text="${number}"></div> <!-- 출력하려면 변수 정의 내에 들어가 있어야 사용이 가능하다. -->
+		<div>${number}</div> <!-- 이런식으로 사용하면 따로 출력이 되지 않음. -->
+		<div>[[${number}]]</div> <!-- 이렇게 만들어줘야 사용이 가능함. -->
+	</div> <!-- th:with : 변수 생성 -->
+	
+	<!-- th:block 렌더링 되지 않는 타임리프 태그 -->
+	<th:block>
+		<div th:with="number1=100, number2=250">
+			[[${number1}]], [[${number2}]] 
+			<div th:text="${number1}"></div>
+			<div th:text="${number2}"></div>
+			<div th:text="${number1 + number2}"></div>
+			
+			<h4 th:text="'결과 : ' + ${number1 + number2}"></h4> <!-- 작은 다움표로 나타내야한다. String을 나타내는 방법 -->
+			<h4>결과 : [[${number1 + number2}]]</h4> <!-- 이런식으로도 가능 -->
+			<h4 th:text="|결과 : ${number1 + number2}|"></h4> <!-- "| 변수 |" 이런식으로 출력 가능 -->
+			
+			<h1>2. 태그 나타내기</h1>
+			<b>진한 글자</b> <!-- 이런걸 가지고 뿌리고 싶을 때,  -->
+			<!-- 해석을 안해주는 이런 주석은 th:text는 escape 처리가 되어있다. ex) 게시판 -->
+			<div th:text="'<b>진한 글자</b>'"></div> <!-- 이런식으로 하면 태그명까지 낼 수 있다. -->
+			
+			<!-- th:utext : 태그를 그대로 해석해준다 -->
+			<div th:utext="'<b>진한 글자</b>'"></div> <!-- 해석이 가능 -->
+			
+			<h1>3. 조건문 - else if, else 개념이 아예 없다.</h1>
+			<th:block th:with="age=25">
+				<div th:if="${age == 25}">나이는 25세이다.</div>
+				<div th:if="${age == 30}">나이는 30세이다.</div>
+				<div th:if="${age != 20}">나이가 20세가 아니다.</div>
+				
+				<!-- unless : if문 반대 - else가 없으니 if문의 조건을 똑같이 쓰고 unless라 하면 else같이 된다. -->
+				<h3 th:if="${age >= 20}">성인이다.</h3>
+				<h3 th:unless="${age >= 20}">미성년자 이다.</h3>
+				
+				<h3 th:unless="${age == 20}">unless는 조건이 거짓일 때 참이다.</h3>
+			</th:block>	
+			
+			<h1>4. switch, case - 일치되는 케이스 수행</h1>
+			<th:block th:with="season=여름">
+				<div th:switch="${season}">
+					<h3 th:case="'봄'"></h3>
+					<h3 th:case="'여름'"></h3>
+					<h3 th:case="'가을'"></h3>
+					<h3 th:case="'겨울'"></h3>
+				</div>
+			</th:block>
+		</div>
+	</th:block>
+</body>
+</html>
