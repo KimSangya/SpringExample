@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+</head>
+<body>
+	<h1>1. 날짜 객체</h1>
+	<div th:text="'Date : ' + ${date}"></div>
+	<div th:text="'LocalDate : ' + ${localDate}"></div>
+	<div th:text="'LocalDateTime : ' + ${localDateTime}"></div>
+	<div th:text="'ZonedDateTime : ' + ${zonedDateTime}"></div>	
+	
+	<!-- 위에서 나타낸 날짜 객체들을 포맷으로 뿌리는 것 -->
+	<h1>2. 날짜 포맷</h1>
+	Date : <span th:text="${#dates.format(date, 'yyyy년 MM월 dd일 a HH시 mm분 ss초')}"></span> <br> <!-- date 객체는 dates라는 포맷 정보를 사용 할 수 있음 -->
+	LocalDate : <span th:text="${#temporals.format(localDate, 'yyyy년 MM월 dd일 a HH시 mm분 ss초')}"></span><br> <!-- localdate, localDateTime, ZonedDateTime의 객체는 temporals이라는 포맷 정보를 사용 -->
+	LocalDateTime : <span th:text="${#temporals.format(localDateTime, 'yyyy/MM/dd a HH:mm:ss')}"></span><br>
+	ZonedDateTime : <span th:text="${#temporals.format(zonedDateTime, 'yyyy년 MM월 dd일 a HH시 mm분 ss초')}"></span><br>
+	
+	<!-- 변수에 저장 -->
+	<th:block th:with="value=${#temporals.format(zonedDateTime, 'yyyy/MM/dd a HH:mm:ss')}">
+		ZonedDateTime : <span th:text="${value}"></span>
+	</th:block>
+	
+	<h1>3. String 함수</h1>
+	<th:block th:with="str1='No pain. No gain.'">
+		<h3>1. 길이 구하기</h3>
+		<span th:text="${#strings.length(str1)}"></span> <!-- 모든걸 다 확인(뛰어쓰기, 점까지 포함) -->
+		
+		<h3>2. 특정 문자열 포함 되어있는지 확인</h3> 
+		No가 존재 하는가? <span th:text="${#strings.contains(str1, 'No')}"></span> <br>
+		no가 존재 하는가? <span th:text="${#strings.contains(str1, 'no')}"></span>
+		
+		<div th:if="${#strings.containsIgnoreCase(str1, 'no')}"> <!-- containsIgnoreCase, 대소문자 무시 메소드 -->
+			문장에 no라는 문자열 존재(대소문자 구분 안함)
+		</div>
+		
+		<h3>3. 특정 문자열로 시작하는지 확인</h3>
+		No로 시작하는가? <span th:text="${#strings.startsWith(str1, 'No')}"></span>
+		
+		<h3>4. 특정 문자열로 끝나는지 확인</h3>
+		.으로 끝나는가? <span th:text="${#strings.endsWith(str1, '.')}"></span>
+		
+		<h3>5. 문자열 치환</h3>
+		<th:block th:with="str2='I love chicken.'">
+			<span th:text="${str2}"></span><br>
+			<span th:text="${#strings.replace(str2, 'chicken', 'bread')}"></span>
+			
+			<h3>6. 구분자로 잘라서 배열 만들기</h3>
+			<span th:text="${#strings.arraySplit(str1, '.')[0]}"></span>
+			<span th:text="${#strings.arraySplit(str1, '.')[1]}"></span>
+			
+			<h3>7. 특정 인덱스 구간 문자열 추출</h3>
+			<!-- str2에서 love 추출 -->
+			<span th:text="${#strings.substring(str2, 2, 6)}"></span>
+			
+			<h3>8. 모두 소문자로 변경</h3>
+			<span th:text="${#strings.toLowerCase(str2)}"></span>
+			
+			<h3>9. 모두 대문자로 변경</h3>
+			<span th:text="${#strings.toUpperCase(str2)}"></span>
+			
+			<h3>10. 앞뒤 공백 제거</h3>
+			<th:block th:with="str3='            h   e   l   l  o     '">
+				<pre th:text="${str3}"></pre>
+				<pre th:text="${#strings.trim(str3)}"></pre>
+			</th:block>
+		</th:block>
+	</th:block>
+</body>
+</html>
