@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>회원가입1</h1>
+        <form action="/lesson06/ex01/add-user" method="post">
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" class="form-control col-4">
+            </div>
+            <div class="form-group">
+                <label for="yyyymmdd">생년월일</label>
+                <input type="text" id="yyyymmdd" name="yyyymmdd" class="form-control col-4" placeholder="예) 19991201">
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="text" id="email" name="email" class="form-control col-4">
+            </div>
+            <div class="form-group">
+                <label for="introduce">자기소개</label>
+                <textarea id="introduce" name="introduce" class="form-control"></textarea>
+            </div>
+            <input type="button" id="joinBtn" value="회원가입" class="btn btn-success">
+        </form>
+    </div>
+    
+    <script>
+    	$(document).ready(function() {
+    		// 1) jquery를 이용한 form submit
+    		
+    		/*
+    		$("form").on('submit', function(e) {
+    			e.preventDefault(); // 이벤트로 잡혀져있는 form을 멈추게 하는 것 / 오타가 하나라도 있으면 화면 이동이 된다. / 서브밋 기능 중단(화면 이동 X)
+    			
+    			// validation
+    			let name = $("input[name=name]").val().trim();
+    			if(name.length < 1) {
+    				alert("이름을 입력하세요");
+    				return false; // submit으로 하게 되면
+    			}
+    			
+    			let yyyymmdd = $("#yyyymmdd").val().trim();
+    			if(yyyymmdd = "") {
+    				alert("생년월일을 입력하세요");
+    				return false;
+    			}
+    			
+    			let email = $("#email").val().trim();
+    			if(!email) {
+    				alert("이메일 주소를 입력해주세요");
+    				return false;
+    			}
+    			
+    			alert("서브밋"); 
+    		}); */
+    		
+    		// 2) jquery의 AJAX 통신 이용
+    		// 지금 예제에서만 form 태그 사용하고 그 뒤로는 사용하지 않을것이다.
+    		$("#joinBtn").on('click', function() {
+    			// alert("클릭");
+    			// validation
+    			let name = $("input[name=name]").val().trim();
+    			if(name.length < 1) {
+    				alert("이름을 입력하세요");
+    				return; // submit으로 하게 되면
+    			}
+
+    			let yyyymmdd = $("#yyyymmdd").val().trim();
+    			if(yyyymmdd == "") {
+    				alert("생년월일을 입력하세요");
+    				return;
+    			}
+    			
+    			let email = $("#email").val().trim();
+    			if(!email) {
+    				alert("이메일 주소를 입력해주세요");
+    				return;
+    			}
+    			
+    			let introduce = $("#introduce").val();
+    			
+    			console.log(name);
+    			console.log(yyyymmdd);
+    			console.log(email);
+    			console.log(introduce);
+    			
+    			// AJAX 통신 => 서버에 요청
+    			$.ajax({
+    				//request
+    				type:"POST" // 메소드
+    				, url:"/lesson06/ex01/add-user" // 갈 URL
+    				, data:{"name":name, "yyyymmdd":yyyymmdd, "email":email, "introduce":introduce} // "키":값
+    				
+    				//response
+    				//callback 함수
+    				, success:function(data) { // data 파라미터 : 응답값(String) / ajax의 응답값은 무조건 String이다.
+    					// alert(data);
+    					if(data == "성공") {
+    						location.href = "/lesson06/ex01/after-add-user-view";
+    					}
+    				}
+    				, error:function(xhr, status, error) { // 상황에 따라서 다른.. 선생님은 따로 error만 정리
+    					alert(xhr);
+    					alert(status);
+    					alert(error);
+    				}
+    			});
+    			
+    		});
+    	});
+    </script>
+</body>
+</html>
