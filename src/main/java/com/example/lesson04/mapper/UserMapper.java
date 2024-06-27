@@ -14,4 +14,6 @@ public interface UserMapper {
 			@Param("introduce") String introduce);
 	
 	public User selectLatestUser();
+	
+	public boolean isDuplicationByName(String name); // 이친구는 다른 애 이기 때문에 특수한 쿼리라서 이상하게 짓는것이다.
 }

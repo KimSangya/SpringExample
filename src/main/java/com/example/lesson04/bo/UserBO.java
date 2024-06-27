@@ -26,4 +26,9 @@ public class UserBO {
 		return userMapper.selectLatestUser();
 	}
 	
+	// input : name
+	// output : select count(*) from `new_user` where `name` = '신보람';의 갯수를 리턴 해도 괜찮다. 그래서 리턴타입을 boolean으로 할 수도 있다.
+	public boolean isDuplicationByName(String name) {
+		return userMapper.isDuplicationByName(name);
+	}
 }

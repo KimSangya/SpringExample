@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container">
+        <h1>회원가입1</h1>
+        <form action="/lesson06/ex01/add-user" method="post">
+            <div class="form-group">
+                <label for="name">이름</label>
+                <div class="d-flex">
+                	<input type="text" id="name" name="name" class="form-control col-4">
+                	<button type="button" id="nameCheckBtn" class="btn btn-warning">중복확인</button>
+            	</div>
+            	
+            	<small id="nameStatusArea"></small>
+            </div>
+            <input type="button" id="joinBtn" value="회원가입" class="btn btn-success">
+        </form>
+    </div>
+    
+    <script>
+    	$(document).ready(function() {
+    		// 중복 확인 버튼 클릭  
+    		$("#nameCheckBtn").on('click', function() {
+    			// 테스트 확인
+    			// alert("중복확인");
+    			// nameStatusArea 초기화
+    			// if문에 들어간다고 해도 한번밖에 나오지 않음
+    			$("#nameStatusArea").empty(); // 자식 태그 모두 비움
+    			
+    			let name = $("#name").val().trim();
+    			if(!name) {
+    				$("#nameStatusArea").append('<span class="text-danger">이름이 비어있습니다.</span>'); // append : 뒤에있는 태그가 덧붙여진다.
+    				return;
+    			}
+    			
+    			// AJAX 중복확인 (DB)
+    			$.ajax({
+    				// request
+    				type:"GET" // get이면 생략 가능
+    				, url:"/lesson06/ex02/is-duplication-name"
+    				, data:{"name":name}
+    				
+    				// response
+    				, success:function(data) {
+    					// {"code":200, "is-duplication" : true} => 중복
+    					if (data.is-duplication) {
+    						$("#nameStatusArea").append('<span class="text-danger">중복된 이름입니다.</span>');
+    					}
+    				}
+    				, error:function(error) {
+    					alert("이름 중복확인에 실패했습니다.");
+    				}
+    			});
+    		});
+    		
+    		// 회원가입
+    		$("#joinBtn").on('click', function() {
+    			// alert("회원가입");
+    			let children = $("#nameStatusArea").children();
+    			console.log(children);
+    			
+    			// nameStatusArea에 자식태그가 아무것도 없으면 가입 진행
+    			if(children.length < 1) {
+    				alert("가입 진행");
+    			} else {
+    				alert("불가");
+    			}
+    		});
+    	});
+    </script>
+</body>
+</html>
