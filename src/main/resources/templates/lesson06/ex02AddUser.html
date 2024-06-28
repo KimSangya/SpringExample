@@ -51,7 +51,7 @@
     				// response
     				, success:function(data) {
     					// {"code":200, "is-duplication" : true} => 중복
-    					if (data.is-duplication) {
+    					if (data.is_duplication) {
     						$("#nameStatusArea").append('<span class="text-danger">중복된 이름입니다.</span>');
     					}
     				}
