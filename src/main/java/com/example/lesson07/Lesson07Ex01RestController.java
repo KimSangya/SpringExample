@@ -25,4 +25,20 @@ public class Lesson07Ex01RestController {
 		
 		return studentBO.addStudent(name, phoneNumber, email, dreamJob);
 	}
+	
+	// U : update
+	@GetMapping("/update")
+	public StudentEntity update() {
+		// id가 7번인  dreamJob 변경(기획)
+		return studentBO.updateStudentDreamJobById(7, "기획자");
+	}
+	
+	// D : delete
+	@GetMapping("/delete")
+	public String delete() {
+		// id가 8번인 데이터 삭제
+		studentBO.deleteStudentById(8);
+		
+		return "삭제 성공!";
+	}
 }
