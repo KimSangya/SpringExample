@@ -3,6 +3,8 @@ package com.example.lesson07.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.example.lesson07.entity.StudentEntity;
 
@@ -38,5 +40,14 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Integer>
 	
 	// 9
 	public List<StudentEntity> findByIdBetween(int startId, int endId);
+	
+	// 다른 방식
+	// ex02/2 - native query 내가 시키는 쿼리를 직접해! 라는 말
+	// @Query(value = "select * from `new_student` where `dreamJob` = :dreamJob", nativeQuery = true) // nativeQuery = true => DB에 직접 SQL 쿼리 수행
+	
+	// ex02/2-1 - JPQL(엔티티 조회) 형식은 native query랑 비슷해지는데, JPQL로 사용. : SQL query 아님!
+	@Query(value = "select s from StudentEntity s where s.dreamJob = :dreamJob") // nativeQuery = false / value에 쿼리를 작성하는데, 엔티티로 조회를 하는것 s : 엔티티의 별칭을 설정
+	// native 문법과는 다른 문법이다.
+	public List<StudentEntity> findByDreamJob(@Param("dreamJob") String dreamJob); // 파라미터의 어노테이션을 붙어줘야한다.
 	
 }
